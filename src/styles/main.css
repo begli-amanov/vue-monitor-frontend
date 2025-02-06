@@ -1,0 +1,189 @@
+/* 
+==========================================================================
+   PLUGIN IMPORTS
+==========================================================================
+*/
+
+@import 'primeicons/primeicons.css';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* 
+==========================================================================
+   FONT HOST
+==========================================================================
+*/
+
+@font-face {
+  font-family: 'Inter Var';
+  src: url('../fonts/InterVar.ttf');
+}
+
+/* 
+==========================================================================
+   MODERN CSS RESET BY JOSH COMEAU
+==========================================================================
+*/
+
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  /* 3. Add accessible line-height */
+  line-height: 1.5;
+  font-size: 1rem;
+  text-rendering: optimizeLegibility;
+
+  /* 4. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  overflow: visible !important;
+}
+
+/*
+  5. Improve media defaults
+*/
+img,
+picture,
+video,
+canvas,
+svg,
+button,
+input {
+  display: block;
+  max-width: 100%;
+}
+
+/*
+  6. Remove built-in form typography styles
+*/
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/*
+  7. Avoid text overflows
+*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  overflow-wrap: break-word;
+  margin-bottom: 0.875rem;
+  text-align: center;
+}
+
+/*
+  8. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+
+/* 
+==================================================================
+   CUSTOM VARIABLES
+==================================================================
+*/
+
+:root[class='my-app-dark'] {
+  --p-button-primary-background: var(--p-surface-50);
+  --p-checkbox-checked-background: var(--p-surface-50);
+  --p-checkbox-checked-hover-background: var(--p-surface-50);
+  --p-button-primary-border-color: var(--p-surface-50);
+  --p-paginator-nav-button-selected-background: var(--p-surface-50);
+  --p-paginator-nav-button-selected-color: var(--p-surface-950);
+  --p-paginator-border-radius: 0 0 0.375rem 0.375rem;
+
+  background-color: var(--p-surface-950);
+}
+
+/* Custom classes */
+
+.wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  background: var(--p-surface-900);
+  border: 0.0625rem solid var(--p-surface-700);
+  padding: 2rem;
+  border-radius: .375rem;
+  margin-bottom: 1rem;
+}
+
+/* Width of the login form card */
+.login-form {
+  width: 28rem;
+}
+
+.card-border {
+  border: 0.0625rem solid var(--p-surface-700);
+}
+
+/* Modal dialog style */
+.modal-dialog-btn {
+  min-width: 49%;
+}
+
+.p-dialog-header {
+  --p-dialog-header-padding: 1.1rem;
+}
+
+/* Table header */
+.p-datatable-header {
+  border-radius: 0.375rem 0.375rem 0 0;
+}
+
+/* Paginator */
+.p-datatable-paginator-bottom {
+  border-radius: 0 0 0.375rem 0.375rem;
+}
+
+.p-paginator-current {
+  margin-right: 0.625rem;
+}
+
+/* Hard coded styles for the input field and its clear icon  */
+.p-select-clear-icon {
+  inset-inline-end: 0.7rem !important;
+}
+
+/* Used ID of the input field to style it as wished */
+#search-field {
+  width: 18rem;
+}
+
+.p-select-clear-icon:hover {
+  cursor: pointer;
+}
+
+.p-iconfield .p-inputtext:not(:last-child) {
+  padding-inline-end: 2.2rem;
+}
