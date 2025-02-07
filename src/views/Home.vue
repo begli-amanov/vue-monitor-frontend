@@ -1,6 +1,6 @@
 <script setup lang="js">
 // Import necessary modules and components
-import { getListOfLicenses, createOrEditLicense } from '@/services/LicenseService'
+import LicenseService from '@/services/LicenseService'
 import { FilterMatchMode } from '@primevue/core/api'
 import { useToast } from 'primevue/usetoast'
 import { onMounted, ref } from 'vue'
@@ -27,12 +27,8 @@ import ScrollTop from 'primevue/scrolltop'
 // Fetch licenses when the component is mounted
 onMounted(async () => {
   try {
-    const data = await getListOfLicenses()
-    if (data && data.licenses) {
-      licenses.value = data.licenses
-    } else {
-      throw new Error('Invalid data structure')
-    }
+    const data = await LicenseService.getListOfLicenses()
+    licenses.value = data.licenses
   } catch (error) {
     console.error('Failed to fetch licenses:', error)
     toast.add({
@@ -106,9 +102,14 @@ const hideDialog = () => {
 
 // Function to create or edit a license. This function is called when the save button is clicked and is in LicenseService.js
 const handleCreateOrEditLicense = async () => {
-  const result = await createOrEditLicense(license.value, licenses.value, toast, findIndexById)
-  licenseDialog.value = result.licenseDialog
-  license.value = result.license
+  const licenseResponse = await LicenseService.createOrEditLicense(
+    license.value,
+    licenses.value,
+    toast,
+    findIndexById,
+  )
+  licenseDialog.value = licenseResponse.licenseDialog
+  license.value = licenseResponse.license
 }
 
 // Function to edit a license
