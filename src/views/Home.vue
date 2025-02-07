@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="js">
 // Import necessary modules and components
 import { LicenseService } from '@/services/LicenseService'
 import { FilterMatchMode } from '@primevue/core/api'
