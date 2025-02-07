@@ -55,13 +55,6 @@ const filters = ref({
   status: { value: null, matchMode: FilterMatchMode.EQUALS },
 })
 
-// Status options for the dropdown
-const statuses = ref([
-  { label: 'VALID', value: 'VALID' },
-  { label: 'EXPIRING SOON', value: 'EXPIRING SOON' },
-  { label: 'EXPIRED', value: 'EXPIRED' },
-])
-
 // Vendor options for the dropdown
 const vendors = ref([
   { label: 'DVEAS', value: 'DVEAS' },
@@ -547,20 +540,6 @@ const getStatusLabel = (status) => {
           <InputText id="wbs" v-model="license.wbs" fluid />
         </div>
       </div>
-
-      <!-- License status selects on modal -->
-      <!-- <div>
-				<label for="status" class="block font-bold mb-3">License Status</label>
-
-				<Select
-					id="status"
-					v-model="license.status"
-					:options="statuses"
-					optionLabel="label"
-					placeholder="Select a Status"
-					fluid
-				></Select>
-			</div> -->
 
       <!-- Vendor select on modal-->
       <div class="grid grid-cols-12 gap-4">

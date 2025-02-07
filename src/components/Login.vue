@@ -41,7 +41,7 @@ const checked = ref(true)
           </div>
 
           <RouterLink to="/">
-            <Button label="In" icon="pi pi-user" class="w-full" />
+            <Button label="Sign In" icon="pi pi-sign-in" class="w-full" />
           </RouterLink>
         </div>
       </div>
