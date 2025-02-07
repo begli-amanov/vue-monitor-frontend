@@ -101,18 +101,23 @@ const hideDialog = () => {
 
 // Function to create or edit a license
 const createOrEditLicense = async () => {
+  // Set the submitted flag to true
   submitted.value = true
 
+  // Check if the license name is not empty
   if (license?.value.name?.trim()) {
+    // Format the expiry date to ISO string if it exists
     if (license.value.expiryDate) {
       license.value.expiryDate = new Date(license.value.expiryDate).toISOString().split('T')[0]
     }
 
+    // Create the payload with the license data
     const payload = {
       license: { ...license.value },
     }
 
     try {
+      // Send the license data to the server
       const response = await fetch('http://localhost:8080/license/create', {
         method: 'POST',
         headers: {
@@ -121,24 +126,30 @@ const createOrEditLicense = async () => {
         body: JSON.stringify(payload),
       })
 
+      // Check if the response is not ok, then throw an error
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }
 
+      // Parse the response data
       const data = await response.json()
       console.log('License saved successfully:', data)
 
-      // Fetch the updated license data from the server
+      // Fetch the updated license data from the server using the generated ID
       const updatedLicenseResponse = await fetch(`http://localhost:8080/license/${data}`)
       if (!updatedLicenseResponse.ok) {
         throw new Error('Failed to fetch updated license data')
       }
 
+      // Parse the updated license data
       const updatedLicenseData = await updatedLicenseResponse.json()
       console.log('Updated license data:', updatedLicenseData)
 
+      // Update the licenses array with the fetched data
       if (license.value.id) {
+        // If the license already exists, update it in the licenses array
         licenses.value[findIndexById(license.value.id)] = updatedLicenseData
+        // Show a success toast message
         toast.add({
           severity: 'success',
           summary: 'Successful',
@@ -146,7 +157,9 @@ const createOrEditLicense = async () => {
           life: 3000,
         })
       } else {
+        // If the license is new, add it to the licenses array
         licenses.value.push(updatedLicenseData)
+        // Show a success toast message
         toast.add({
           severity: 'success',
           summary: 'Successful',
@@ -155,9 +168,11 @@ const createOrEditLicense = async () => {
         })
       }
     } catch (error) {
+      // Log any errors that occur during the fetch operation
       console.error('There was a problem with the fetch operation:', error)
     }
 
+    // Close the license dialog and reset the license object
     licenseDialog.value = false
     license.value = {}
   }
