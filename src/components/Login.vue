@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="js">
 import Button from 'primevue/button'
 import Checkbox from 'primevue/checkbox'
 import InputText from 'primevue/inputtext'
