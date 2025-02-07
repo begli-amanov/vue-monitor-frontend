@@ -1,8 +1,13 @@
 <script setup lang="js">
-import { Button } from 'primevue'
+// Import necessary modules and components
+import { onMounted, ref } from 'vue'
+import { RouterLink } from 'vue-router'
+
+// Import PrimeVue components
+import Button from 'primevue/button'
 import Chart from 'primevue/chart'
 import Toolbar from 'primevue/toolbar'
-import { onMounted, ref } from 'vue'
+import ScrollTop from 'primevue/scrolltop'
 
 onMounted(() => {
   monthlyBasedChartData.value = setMonthlyBasedChartData()
@@ -234,4 +239,5 @@ const setQuarterBasedChartOptions = () => {
       />
     </div>
   </div>
+  <ScrollTop />
 </template>

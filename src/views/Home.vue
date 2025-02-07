@@ -22,6 +22,7 @@ import Tag from 'primevue/tag'
 import Textarea from 'primevue/textarea'
 import Toast from 'primevue/toast'
 import Toolbar from 'primevue/toolbar'
+import ScrollTop from 'primevue/scrolltop'
 
 // Fetch licenses when the component is mounted
 onMounted(async () => {
@@ -612,21 +613,6 @@ const getStatusLabel = (status) => {
         </div>
       </div>
 
-      <!-- Total price of a license -->
-      <div class="grid grid-cols-12 gap-4">
-        <div class="col-span-12">
-          <label for="totalPrice" class="block font-bold mb-3">Total Price</label>
-          <InputNumber
-            id="totalPrice"
-            mode="currency"
-            currency="EUR"
-            v-model="license.totalPrice"
-            integeronly
-            fluid
-          />
-        </div>
-      </div>
-
       <!-- Notes on modal -->
       <div>
         <label for="note" class="block font-bold mb-3">Notes</label>
@@ -708,4 +694,5 @@ const getStatusLabel = (status) => {
       />
     </template>
   </Dialog>
+  <ScrollTop />
 </template>
