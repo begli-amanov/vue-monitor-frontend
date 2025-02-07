@@ -99,54 +99,20 @@ const hideDialog = () => {
   submitted.value = false
 }
 
-// Function to save the license
-const saveLicense = async () => {
-  // Mark the form as submitted
+// Function to create or edit a license
+const createOrEditLicense = async () => {
   submitted.value = true
 
-  // Check if the license name is not empty
   if (license?.value.name?.trim()) {
-    // Format the expiryDate to 'yyyy-mm-dd' if it exists
     if (license.value.expiryDate) {
       license.value.expiryDate = new Date(license.value.expiryDate).toISOString().split('T')[0]
     }
-    // Check if the license has an ID (existing license)
-    if (license.value.id) {
-      // Update the status if it has a value property
-      license.value.status = license.value.status.value
-        ? license.value.status.value
-        : license.value.status
-      // Update the license in the licenses array
-      licenses.value[findIndexById(license.value.id)] = license.value
-      toast.add({
-        severity: 'success',
-        summary: 'Successful',
-        detail: 'License Updated',
-        life: 3000,
-      })
-      console.log('License updated:', license.value)
-    } else {
-      // Set the status to 'VALID' if not already set
-      license.value.status = license.value.status ? license.value.status.value : 'VALID'
-      // Add the new license to the licenses array
-      licenses.value.push(license.value)
-      toast.add({
-        severity: 'success',
-        summary: 'Successful',
-        detail: 'License Created',
-        life: 3000,
-      })
-      console.log('License created:', license.value)
-    }
-    // Prepare the data to be sent to the server
+
     const payload = {
-      license: { ...license.value, totalPrice: totalPrice.value },
+      license: { ...license.value },
     }
-    // Log the object being sent to the server
-    console.log('Object being sent:', payload)
 
     try {
-      // Send the license data to the server
       const response = await fetch('http://localhost:8080/license/create', {
         method: 'POST',
         headers: {
@@ -154,18 +120,44 @@ const saveLicense = async () => {
         },
         body: JSON.stringify(payload),
       })
-      // Check if the response is not ok
+
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }
-      // Parse the response data
+
       const data = await response.json()
       console.log('License saved successfully:', data)
+
+      // Fetch the updated license data from the server
+      const updatedLicenseResponse = await fetch(`http://localhost:8080/license/${data}`)
+      if (!updatedLicenseResponse.ok) {
+        throw new Error('Failed to fetch updated license data')
+      }
+
+      const updatedLicenseData = await updatedLicenseResponse.json()
+      console.log('Updated license data:', updatedLicenseData)
+
+      if (license.value.id) {
+        licenses.value[findIndexById(license.value.id)] = updatedLicenseData
+        toast.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'License Updated',
+          life: 3000,
+        })
+      } else {
+        licenses.value.push(updatedLicenseData)
+        toast.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'License Created',
+          life: 3000,
+        })
+      }
     } catch (error) {
-      // Log any errors that occur during the fetch operation
       console.error('There was a problem with the fetch operation:', error)
     }
-    // Close the license dialog and reset the license object
+
     licenseDialog.value = false
     license.value = {}
   }
@@ -638,7 +630,12 @@ const getStatusLabel = (status) => {
       />
 
       <!-- Save button on modal -->
-      <Button label="Save" icon="pi pi-save" @click="saveLicense" class="modal-dialog-btn mt-5" />
+      <Button
+        label="Save"
+        icon="pi pi-save"
+        @click="createOrEditLicense"
+        class="modal-dialog-btn mt-5"
+      />
     </template>
   </Dialog>
 
